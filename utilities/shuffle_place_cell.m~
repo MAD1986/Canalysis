@@ -19,14 +19,11 @@ parfor S=1:Nshuffle
 end
 %Fix if not the same length
 for S=1:Nshuffle
-    maxROI=max(length(shuffle_tuning_specificity{S}));
-end
-for S=1:Nshuffle
+maxROI=max(length(shuffle_tuning_specificity{S}));
 while length(shuffle_tuning_specificity{S})<maxROI
-   shuffle_tuning_specificity{S}=[shuffle_tuning_specificity{S} 0];
+    shuffle_tuning_specificity{S}= [shuffle_tuning_specificity{S} 0];
 end
 end
-    
 disp(['End shuffle '])
 toc;
 %% Rate maps : total number of onset that occurred in a location
