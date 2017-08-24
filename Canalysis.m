@@ -1,7 +1,7 @@
 %%  MAD Ca2+ analysis
 
 %% Import data (XML, MAT, CSV)
-directory_name = '/Users/martial/Documents/Results/CA3_ThyGC6f/M1/FOV4' %folder with .mat .csv and .xml
+directory_name = '/Users/martial/Documents/Results/CA3_ThyGC6f/M6/D2' %folder with .mat .csv and .xml
 %!!!! files are listed by alphabetical order !!!!
 %!!!! Keep same name for mat and csv !!!!
 type='expdff';    %tye of calcium trace 'Cdf' ; 'expdff' or 'spikes' 
@@ -48,7 +48,7 @@ clear CSV XML options;
 %% Correct drifting baseline
 % Info 
 % https://www.mathworks.com/help/bioinfo/ref/msbackadj.html
-options.msbackadj=0; % 1 or 0 
+options.msbackadj=1; % 1 or 0 
 % Set parameters
 options.windwith=250; %width for the shifting window (in frame)
 options.dispfig=1; % Display figure 
@@ -69,7 +69,7 @@ clear options;
 options.restricted=1; %Event detection on restricted trace
 options.iterations=3; %Nb of iterations %Danielson et al. used 3 iterations
 options.SDOFF=0.5; %Threshold below x SD for OFFSET 
-options.msbackadj=0; % Corrected baseline
+options.msbackadj=1; % Corrected baseline
 % Test different threshold with histogram of error rate 
 % Lovett-Barron et al. 2014
 % Rajasethupathy et al. 2015
@@ -87,7 +87,7 @@ options.SDON=2.5; %Threshold above x SD for ONSET
 options.mindurevent=1; %Min duration of event to be considered Danielson et al. used > 1s
 options.dispfig=1; % Display figure 
 if options.dispfig==true,
-options.c2plot=2; % neuron to display
+options.c2plot=20; % neuron to display
 end
 % Detect events
 for i=1:sessions

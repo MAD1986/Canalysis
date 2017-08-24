@@ -162,8 +162,9 @@ for i=1:size(onset_offset,2)
 onset=onset_offset{i}(:,1);
 on_R{i}(:,ii)=onset>=run_int_idx(ii,1) & onset<=run_int_idx(ii,2);
 onset_R_keep{i}=sum(on_R{i},2);
+        end
 end
-end
+
 
 for i=1:size(onset_offset,2)
     keep=onset_R_keep{i};

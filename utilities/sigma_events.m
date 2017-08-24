@@ -174,7 +174,7 @@ plotStyle = {'b.','k.','r.'};
 false_ratio_plot{sig}=[edges(1:end-1)' false_ratio_bin(sig,:)'];
 x=false_ratio_plot{sig}(:,1);
 y=false_ratio_plot{sig}(:,2);
-f = fit(x,y,'exp1');
+%f = fit(x,y,'exp1');
 plot(x,y, '-o');
 %plot(f)
 xlabel('Transient duration (s)'); 
