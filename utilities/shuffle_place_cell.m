@@ -11,27 +11,19 @@ Nbin=options.Nbin;
 sigma=options.sigma_filter;
 %% Shuffle onset map and tuning specificity
 tic;
-onset_binary=Events.Run.run_onset_binary;
+%onset_binary=Events.Run.run_onset_binary; old
+onset_binary=Place_cell.Spatial_Info.Run_onset_bin;
+
 disp(['Starting shuffle ', num2str(Nshuffle), 'X'])
-parfor S=1:Nshuffle
-    %[onset_map_shuffle{S}]=shuffle_map(run_onset_binary,bin,Nshuffle,Nbin);
+for S=1:Nshuffle
 [onset_map_shuffle{S},shuffle_tuning_specificity{S}]=shuffle_script(onset_binary,Place_cell,Behavior,Events,options);
-end
-%Fix if not the same length
-for S=1:Nshuffle
-    maxROI=max(length(shuffle_tuning_specificity{S}));
-end
-for S=1:Nshuffle
-while length(shuffle_tuning_specificity{S})<maxROI
-   shuffle_tuning_specificity{S}=[shuffle_tuning_specificity{S} 0];
-end
 end
     
 disp(['End shuffle '])
 toc;
 %% Rate maps : total number of onset that occurred in a location
-parfor S=1:Nshuffle
-[onset_map_shuffle_sm{S}]=gauss_filt(onset_map_shuffle{S},Nbin,sigma)
+for S=1:Nshuffle
+[onset_map_shuffle_sm{S}]=gauss_filt(onset_map_shuffle{S},Nbin,sigma);
 end
 for S=1:Nshuffle
 for i=1:length(options.Nbin)
@@ -60,21 +52,29 @@ Place_cell.Tuning_Specificity.Shuffle.tuning_specificity=shuffle_TS;
 
 %% Test significance
 
-%Tuning Specificity
 
+%Tuning Specificity
 tuning_spe=Place_cell.Tuning_Specificity.tuning_specificity;
 %p-value was defined as the fraction of shuffle distribution that 
 %exceeded the cell true tuning specificity
 TS_pvalue=(sum(shuffle_TS>tuning_spe))/Nshuffle;
 %Significant ROI = <pvalue
 TS_ROI=TS_pvalue<options.pvalue;
+
+%Remove from analysis cell if not enough events (set in options.minevents)
+for n=1:size(run_onset_binary,2)
+if sum(run_onset_binary(:,n))<options.minevents
+TS_ROI(:,n)=0;
+TS_pvalue(:,n)=nan;
+end
+end
+
 %Save structure
 Place_cell.Tuning_Specificity.ROI_pvalue=TS_pvalue;
 Place_cell.Tuning_Specificity.significant_ROI=TS_ROI;
 
 
 %Spatial Specificity
-
 SI=Place_cell.Spatial_Info.Spatial_Info;
 SIS=Place_cell.Spatial_Info.Spatial_Info_Skaggs;
 %For each bin (N):
@@ -107,10 +107,23 @@ SIS_pvalue=(sum(final_SIS_shuffle>final_SIS))/Nshuffle;
 SI_ROI=SI_pvalue<options.pvalue;
 SIS_ROI=SIS_pvalue<options.pvalue;
 
+%Remove from analysis cell if not enough events (set in options.minevents)
+for n=1:size(run_onset_binary,2)
+if sum(run_onset_binary(:,n))<options.minevents
+SI_ROI(:,n)=0;
+SIS_ROI(:,n)=0;
+SI_pvalue(:,n)=nan;
+SIS_pvalue(:,n)=nan;
+end
+end
+
+
 Place_cell.Spatial_Info.ROI_pvalue=SI_pvalue;
 Place_cell.Spatial_Info.ROI_Skaggs_pvalue=SIS_pvalue;
 Place_cell.Spatial_Info.significant_ROI=SI_ROI;
 Place_cell.Spatial_Info.significant_ROI_Skaggs=SIS_ROI;
+
+
 
 %% Find tuned cells (significant spatial info and tuning specificity)
 tuned_cells=intersect((find(TS_ROI==1)),(find(SI_ROI==1)));
@@ -146,6 +159,8 @@ ROI_ord_STC_dF=sortrows(ord_STC_dF,2);
 STC_dF_sorted=(ROI_ord_STC_dF(:,3:end));
 %Remove Nan
 STC_sorted_nonan=STC_sorted(~any(isnan(STC_sorted),2),:);
+STC_dF_sorted_nonan=STC_dF_sorted(~any(isnan(STC_sorted),2),:);
+
 if options.dispfig==1
 figure; 
 subplot(1,2,1)
@@ -154,18 +169,13 @@ title('Spatial Tuning Curve')
 xlabel('bin position') % x-axis label
 ylabel('neuron number') % y-axis label
 subplot(1,2,2)
-imagesc(STC_dF_sorted); colormap('Jet');
+imagesc(STC_dF_sorted_nonan); colormap('Jet');
 title('Mean dF/F')
 xlabel('bin position') % x-axis label
 clrbar = colorbar;
 clrbar.Label.String=({'Normalized Ca2+ transient rate',' / ','Normalized mean dF/F'});
 end
-
-
 end
-
-
-
 end
 
 

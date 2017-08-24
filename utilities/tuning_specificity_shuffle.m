@@ -1,5 +1,5 @@
 
-function [Place_cell]=tuning_specificity(Place_cell,Behavior,Events,options);
+function [Place_cell]=tuning_specificity_shuffle(Place_cell,Behavior,Events,options);
 %% Extract the data
 run_position=Behavior.resampled.run_position;
 run_time=Behavior.resampled.run_time;
@@ -13,10 +13,9 @@ run_ones=Behavior.run_ones;
 %% Assemble DATA
 %Time and position for running epochs ONLY:
 run_position_norm=(((run_position - min(run_position)) / (( max(run_position) - min(run_position)))));
-run_onset_bin=run_onset_binary(run_ones==1,:);
-%run_onset_bin=run_onset_binary;
+%run_onset_bin=run_onset_binary(run_ones==1,:);
+run_onset_bin=run_onset_binary;
 
-  
 %position of the mouse at onset time:
 for u=1:size(run_onset_bin,2)
 onset_position{u}=run_position_norm(run_onset_bin(:,u)==1);

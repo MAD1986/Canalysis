@@ -14,14 +14,8 @@ binary_shuffle(:,i)=binary(binary_shuffle_idx(:,i),i);
 end
 
 %% shuffle map 
-run_binary_shuffle=binary_shuffle(run_ones==1,:);
-%Remove from analysis cell if not enough events (set in options.minevents)
-for n=1:size(run_binary_shuffle,2)
-if sum(run_binary_shuffle(:,n))<options.minevents
-run_binary_shuffle(:,n)==0;
-end
-end 
-
+%run_binary_shuffle=binary_shuffle(run_ones==1,:);
+run_binary_shuffle=binary_shuffle;
 for i=1:length(Nbin)
 for n=1:size(run_binary_shuffle,2)
 on_shuffle{i}{n}=bin{i}(run_binary_shuffle(:,n)==1);
@@ -34,8 +28,9 @@ end
 %% Shuffle tuning
 %save null onset in structure to feed to shuffle function
 Events_shuffle.options=Events.options;
-Events_shuffle.Run.run_onset_binary=binary_shuffle;
+%Events_shuffle.Run.run_onset_binary=binary_shuffle;
+Events_shuffle.Run.run_onset_binary=run_binary_shuffle;
 %function tuning_specificity with null distribution
-[shuffle]=tuning_specificity(Place_cell,Behavior,Events_shuffle,options);
+[shuffle]=tuning_specificity_shuffle(Place_cell,Behavior,Events_shuffle,options);
 shuffle_tuning_specificity=shuffle.Tuning_Specificity.tuning_specificity;
 end

@@ -42,13 +42,7 @@ end
 % Nb of onset for each bins
 % dF/F for each bins
 %1)only run
-run_onset_bin=run_onset_binary(run_ones==1,:);
-%Remove from analysis cell if not enough events (set in options.minevents)
-for n=1:size(run_onset_bin,2)
-if sum(run_onset_bin(:,n))<options.minevents
-run_onset_bin(:,n)==0;
-end
-end  
+run_onset_bin=run_onset_binary(run_ones==1,:); 
 run_C_df=C_df(run_ones==1,:);
 %2)value for each bin onset
 for i=1:length(options.Nbin)
