@@ -15,14 +15,14 @@ tic;
 onset_binary=Place_cell.Spatial_Info.Run_onset_bin;
 
 disp(['Starting shuffle ', num2str(Nshuffle), 'X'])
-for S=1:Nshuffle
+parfor S=1:Nshuffle
 [onset_map_shuffle{S},shuffle_tuning_specificity{S}]=shuffle_script(onset_binary,Place_cell,Behavior,Events,options);
 end
     
 disp(['End shuffle '])
 toc;
 %% Rate maps : total number of onset that occurred in a location
-for S=1:Nshuffle
+parfor S=1:Nshuffle
 [onset_map_shuffle_sm{S}]=gauss_filt(onset_map_shuffle{S},Nbin,sigma);
 end
 for S=1:Nshuffle

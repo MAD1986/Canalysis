@@ -159,12 +159,15 @@ on2=onset_binary(run_ones==1,:);
 % restrict onset to running epochs
 for i=1:size(onset_offset,2)
     for ii=1:size(run_int_idx,1)
+        if isempty(onset_offset{i})==0
 onset=onset_offset{i}(:,1);
 on_R{i}(:,ii)=onset>=run_int_idx(ii,1) & onset<=run_int_idx(ii,2);
 onset_R_keep{i}=sum(on_R{i},2);
+        elseif isempty(onset_offset{i})==1
+onset_R_keep{i}=nan;
         end
 end
-
+end
 
 for i=1:size(onset_offset,2)
     keep=onset_R_keep{i};
@@ -176,10 +179,11 @@ end
 run_onset_binary=zeros(size(onset_binary,1), size(onset_binary,2));
 norun_onset_binary=run_onset_binary;
 for i=1:size(onset_offset,2)
+            if isempty(onset_offset{i})==0
 run_onset_binary(run_onset_offset{i}(:,1),i)=1;
 norun_onset_binary(norun_onset_offset{i}(:,1),i)=1;
 end
-
+end
 %Make ones
 run_onset_ones=zeros(size(onset_ones,1), size(onset_ones,2));
 norun_onset_ones=run_onset_ones;

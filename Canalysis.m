@@ -1,7 +1,8 @@
 %%  MAD Ca2+ analysis
+addpath(genpath('/Users/martial/Documents/GitHub/Canalysis'));
 
 %% Import data (XML, MAT, CSV)
-directory_name = '/Users/martial/Documents/Results/CA3_ThyGC6f/M4/D2' %folder with .mat .csv and .xml
+directory_name = '/Users/martial/Documents/Results/CA3_ThyGC6f/M4/D3' %folder with .mat .csv and .xml
 %!!!! files are listed by alphabetical order !!!!
 %!!!! Keep same name for mat and csv !!!!
 type='expdff';    %tye of calcium trace 'Cdf' ; 'expdff' or 'spikes' 
@@ -134,7 +135,7 @@ clear options
 % Set parameters
 options.sigma_filter=3; % Sigma (in bin) of gaussian filter (Danielson et al. = 3 bins)
 options.smooth_span=3; % span for moving average filter on dF/F (Dombeck = 3)
-options.minevents=3; % Min nb of total events during session
+options.minevents=3; % Min nb of events during session
 options.Nbin=[2;4;5;8;10;20;25;100]; % Number of bins to test ([2;4;5;8;10;20;25;100] Danielson et al. 2016)
 options.bin_spatial_tuning=100; % Number of bins to compute spatial tuning curve (rate map) -value should be in options.Nbin
 options.Nshuffle=1000; % Nb of shuffle to perform
