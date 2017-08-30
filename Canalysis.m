@@ -2,7 +2,7 @@
 addpath(genpath('/Users/martial/Documents/GitHub/Canalysis'));
 
 %% Import data (XML, MAT, CSV)
-directory_name = '/Users/martial/Documents/Results/CA3_ThyGC6f/M4/D3' %folder with .mat .csv and .xml
+directory_name = '/Users/martial/Documents/test/M4' %folder with .mat .csv and .xml
 %!!!! files are listed by alphabetical order !!!!
 %!!!! Keep same name for mat and csv !!!!
 type='expdff';    %tye of calcium trace 'Cdf' ; 'expdff' or 'spikes' 
