@@ -155,7 +155,11 @@ lap_binary=(zeros(size(lap,1),1));
 lap_binary(lap_RFID_keep)=1;
 
 %Restart position at each RFID 
-lap_row=lap_RFID_keep;
+ lap_row=lap_RFID_keep;
+ time=timeOutputSec;
+
+     if length(lap_row)>1 %No complete lap      
+
 for i=1:length(lap_row)-1;
     for ii=1:length(lap_row)
 pos_cumul{i}=cum_position(lap_row(i):lap_row(i+1),1);
@@ -166,7 +170,6 @@ lap_stop(ii)=lap_row(ii);
 norm_pos{i} = (pos_reset{i} - min(pos_reset{i})) / ( max(pos_reset{i}) - min(pos_reset{i}) );
 end
 end
-time=timeOutputSec;
 % Position for the first incomplete lap
 lap1=cum_position(1:lap_row(1),1);
 % Position for the last incomplete lap
@@ -194,23 +197,34 @@ B=reshape(pos_reset,[],1);
 N=reshape(norm_pos,[],1);
 position=cell2mat(B);
 position_norm=cell2mat(N);
+     end
+  
+if length(lap_row)<=1 %No complete lap      
+ pos_reset{1}=cum_position(1:lap_row,1);  
+ pos_reset{2}=cum_position(lap_row+1:end) -  cum_position(lap_row);
+B=reshape(pos_reset,[],1);
+position=cell2mat(B);
+end
 lick=csvStimRaw(:,7);
 time_position=[time position];
+
 
 
 %% Make structure
 Behavior.time=time;
 Behavior.position=position;
-Behavior.normalizedposition=position_norm;
-Behavior.cumulativeposition=cum_position;
-Behavior.lap=lap_start_stop;
 Behavior.lick=lick;
-
 Behavior.options=options;
+Behavior.cumulativeposition=cum_position;
 
-
+if length(lap_row)>1
+Behavior.normalizedposition=position_norm;
+Behavior.lap=lap_start_stop;
+Behavior.normalizedposition=position_norm;
+end
 
 %% Display figure
+    if length(lap_row)>1
 if options.dispfig==1
 figure; plot(Behavior.time,Behavior.normalizedposition);
 hold on
@@ -222,6 +236,7 @@ M(M >=1) = i;
 plot_tex(:,i)=M;
 end
 plot(Behavior.time,plot_tex/5, 'g');
+end
 end
 end
 

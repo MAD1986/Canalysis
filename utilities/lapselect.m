@@ -1,6 +1,23 @@
 
 function [Imaging, Behavior]= lapselect(C_df, Behavior, XML, options); 
 
+if options.restrict== 0; % restrict trace to full lap
+Imaging.trace=C_df;
+%get framelength of imaging session from XML
+frameLength = length(XML.PVScan.Sequence.Frame);
+%preallocate array
+timeStampsXML = zeros(frameLength,1);
+%extract the relative timestamps for each frame acquired in session
+for ii=1:frameLength
+    timeStampsXML(ii,1) = str2double(XML.PVScan.Sequence.Frame{1,ii}.Attributes.relativeTime);
+end
+%end frame based on XML parsing
+t = timeStampsXML(2:end);
+Imaging.time=t;
+Behavior.options=options;
+end
+
+if options.restrict==1; % restrict trace to full lap
 
 %% Import data
 lap_start_stop=Behavior.lap;
@@ -30,7 +47,6 @@ end
 
 
 %% Extract Timestamps from XML file
-
 %get framelength of imaging session from XML
 frameLength = length(XML.PVScan.Sequence.Frame);
 
@@ -99,4 +115,6 @@ plot(t, C_df(:,options.c2plot)); hold on; plot(Behavior.time, Behavior.normalize
 subplot(2,1,2) 
 plot(Imaging.time_restricted, Imaging.trace_restricted(:,options.c2plot)); hold on; plot(Behavior.restricted.time, Behavior.restricted.normalizedposition)
 end
+end
+
 end

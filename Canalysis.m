@@ -2,7 +2,7 @@
 addpath(genpath('/Users/martial/Documents/GitHub/Canalysis'));
 
 %% Import data (XML, MAT, CSV)
-directory_name = '/Users/martial/Documents/test/M4' %folder with .mat .csv and .xml
+directory_name = '/Users/martial/Documents/Results/CA3_PSAM/M994/soma_only' %folder with .mat .csv and .xml
 %!!!! files are listed by alphabetical order !!!!
 %!!!! Keep same name for mat and csv !!!!
 type='expdff';    %tye of calcium trace 'Cdf' ; 'expdff' or 'spikes' 
@@ -16,7 +16,7 @@ sessions=length(C_df); %ALL
 % Set parameters
 options.mindist=10; %min distance before counting a new lap (cm)
 options.acqHz=10000; % behavior acquisition frequency (Hz)
-options.textures=1; % 1= find RFID for each texture; 0 = no RFID for texture
+options.textures=0; % 1= find RFID for each texture; 0 = no RFID for texture
 options.dispfig=1; % Display figure (lap, RFID)
 %IF find RFID for each texture
 %voltage [min max] signal for each RFID
@@ -34,6 +34,7 @@ Behavior{i} = behavior_lap(CSV{i},options);
 end
 % Restrict calcium data to selected lap
 % Using frame timestamps from associated xml file
+options.restrict= 0; % restrict trace to full lap
 options.startlap= 'first'; %First = 1st complete lap or numbers
 options.endlap='last'; %Last= last complete lap or numbers
 options.dispfig=1; % Display figure 
@@ -44,6 +45,7 @@ end
 for i=1:sessions
 [Imaging{i}, Behavior{i}]= lapselect(C_df{i}, Behavior{i}, XML{i}, options);
 end
+
 clear CSV XML options;
 
 %% Correct drifting baseline
@@ -67,7 +69,7 @@ end
 clear options;
 %% Events detection
 % Set parameters
-options.restricted=1; %Event detection on restricted trace
+options.restricted=0; %Event detection on restricted trace
 options.iterations=3; %Nb of iterations %Danielson et al. used 3 iterations
 options.SDOFF=0.5; %Threshold below x SD for OFFSET 
 options.msbackadj=0; % Corrected baseline
@@ -122,7 +124,7 @@ options.mindist= 10; % Set minimun distance between peaks (frame)
 options.STD_pro=2; % Set minimun prominence of peak ( X * STD noise)
 % Network parameters
 % synchronous epochs based on Rajasethupathy et al. 2015
-options.Nshuffle=100; % Nb of shuffle for synchronous activity 
+options.Nshuffle=1000; % Nb of shuffle for synchronous activity 
 options.pmin=0.05; % min p value to be considered as significant
 options.minframes=3; %consecutive frames with activity above the significance threshold
 
@@ -153,7 +155,7 @@ clear options
 %% Save
 %Where to save:
 tic;
-save('test_ca_3', '-v7.3');
+save('soma_only', '-v7.3');
 toc;
 
 

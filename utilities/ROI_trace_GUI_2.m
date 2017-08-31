@@ -15,13 +15,12 @@ warning
 %Create slider
 sld = uicontrol('Style', 'slider',...
         'Min',1,'Max',nb,'Value',1,...
+        'sliderstep',[1/nb 1/nb],...
         'Position', [4 20 120 20],...
         'Callback', @ROI_dF); 
+    
+    
 
-% Add a text uicontrol to label the slider.
-txt = uicontrol('Style','text',...
-        'Position',[4 45 120 20],...
-        'String','ROI ');
         
 
     % Make figure visble after adding all components
@@ -38,16 +37,17 @@ plot_component(round(r))
 end
     
 function plot_component(r) 
+pos=1:3:(length(ROI)*length(ROI));
+
 for i=1:length(ROI)
-pos=1:length(ROI):(length(ROI)*length(ROI));
 subplot(length(ROI),3,pos(i)+1)
-%imshow(Cn_mean);
+%]imshow(Cn_mean);
 %hold on
 ROI_shape=(ROI_sh{i}(:,:,r));
 ROI_shape( ~any(ROI_shape,2), : ) = [];  %rows
 ROI_shape( :, ~any(ROI_shape,1) ) = [];  %columns
-
 imagesc(ROI_shape);
+
 subplot(length(ROI),3,pos(i))
 imagesc(Cn_mean);
 hold on
