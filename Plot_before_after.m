@@ -4,7 +4,7 @@
 
 %% Load files
 % need mat files with 2 sessions ( before / after )
-session={'STD', 'MIS'}; %or other drug, days, context etc
+session={'CTRL', 'TGOT'}; %or other drug, days, context etc
 folder_name = uigetdir %fgo to the folder
 cd(folder_name);
 listmat = dir('*.mat'); % look for all the mat files (alphabetical order)

@@ -82,7 +82,6 @@ on_off_neg_sig{sig}=on_off_neg;
 end
 
 %% Plot event duration
-
 %Find event duration : time end - time start
 % positives
 for sig=1:size(SD,2);

@@ -59,7 +59,8 @@ ROI_shape( :, ~any(ROI_shape,1) ) = [];  %columns
 imagesc(ROI_shape);
 
 subplot(length(ROI),3,pos(i))
-imagesc(Cn_mean);
+%imagesc(Cn_mean);
+imagesc(ROI{i}.Cn_max)
 hold on
 plot(coord{i}{r}(:,2), coord{i}{r}(:,1), 'w', 'LineWidth', 2)
 

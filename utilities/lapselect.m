@@ -1,5 +1,5 @@
 
-function [Imaging, Behavior]= lapselect(C_df, Behavior, XML, options); 
+function [Imaging, Behavior]= lapselect(C_df, Behavior, XML, options,frames); 
 
 if options.restrict== 0; % restrict trace to full lap
 Imaging.trace=C_df;
@@ -15,6 +15,12 @@ end
 t = timeStampsXML(2:end);
 Imaging.time=t;
 Behavior.options=options;
+
+if options.select_frames==1
+ Imaging.time=t(options.select_frames);
+end
+
+
 end
 
 if options.restrict==1; % restrict trace to full lap

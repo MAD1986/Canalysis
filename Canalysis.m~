@@ -32,25 +32,25 @@ end
 for i=1:sessions
 Behavior{i} = behavior_lap(CSV{i},options);
 end
-% Using frame timestamps from associated xml file
-%use only selected frames for behavior 
-options.select_frames=1; %if restrict = 0
-frames=[{1:19999} {1:20000}]; %r(all = 1:size(C_df{1},1));
-
 % Restrict calcium data to selected lap
+% Using frame timestamps from associated xml file
 options.restrict=0; % restrict trace to full lap
+options.only
+
 options.startlap= 'first'; %First = 1st complete lap or numbers
 options.endlap='last'; %Last= last complete lap or numbers
 options.dispfig=1; % Display figure 
+
+
 if options.dispfig==true,
 options.c2plot=2; % neuron to display
 end
 % Function
 for i=1:sessions
-[Imaging{i}, Behavior{i}]= lapselect(C_df{i}, Behavior{i}, XML{i}, options,frames{i});
+[Imaging{i}, Behavior{i}]= lapselect(C_df{i}, Behavior{i}, XML{i}, options);
 end
 
-clear CSV XML options frames;
+clear CSV XML options;
 
 %% Correct drifting baseline
 % Info 
@@ -159,7 +159,7 @@ clear options
 %% Save
 %Where to save:
 tic;
-save('04_07', '-v7.3');
+save('04_06', '-v7.3');
 toc;
 
 
