@@ -25,7 +25,7 @@ sld = uicontrol('Style', 'slider',...
     % Make figure visble after adding all components
 f.Visible = 'on';
 plot_component(1)
-ROI_nb(1)
+ROI_nb(1)  
 
     % This code uses dot notation to set properties. 
     % Dot notation runs in R2014b and later.
@@ -42,7 +42,11 @@ plot_component(round(r))
 end
 
 function ROI_nb(r) 
-rem_ROI=round(get(sld,'value'));
+    for i=1:length(ROI)
+
+%rm_ROI=[rm_ROI r];
+t=r
+    end
 end
 
 

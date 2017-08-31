@@ -21,7 +21,9 @@ end
 %% Options
 % Plot only keep ROI:
 plot_keep=0; % 0 or 1
-corr_scor_min=0.85; %min correlation score for ROI between session 
+%plot_fr=10;
+%If bug not same nb of ROI:
+
 %% plot
 FOV=length(ROI{1}.Cn_max);
 if plot_keep==true; % 0 or 1
@@ -70,15 +72,13 @@ coord{i}{r}=B{i}{r}{1};
 end
 end
 end
-for i = 1:size(C_df,2)
-for ii= 1:size(C_df,2)
-for r=1:minROI
-[corr_ROI{i}(ii,r)] = corr2(ROI_shape{i}{r},ROI_shape{ii}{r});
-rem_ROI{i}=find(corr_ROI{i}(ii,:)<=corr_scor_min);
+for i = size(C_df,2)
+for ii= size(C_df,2)
+[corr_score{i}{ii}{r}] = corr2(ROI_shape{i}{r},ROI_shape{ii}{r}, 'rows', 'complete');
 end
 end 
-end
-rm_ROI=unique(cell2mat(rem_ROI));
+
+
 
 %set color of contour for sessions
 %all colors : https://www.mathworks.com/help/matlab/ref/colorspec.html
@@ -86,7 +86,8 @@ color=[{'g'} {'m'} {'b'} {'y'}];
 %Plot all session 
 %ROI_trace_GUI(ROI,C_df, ROI_sh,coord,color);
 %OR
-[rem_ROI]=ROI_trace_GUI_2(ROI,C_df, ROI_sh,coord,color,rem_ROI);
+ROI_trace_GUI_2(ROI,C_df, ROI_sh,coord,color);
+
 %Plot only choosen session 
 %for i=1:3
 %ROI_trace_GUI_session(ROI{i},C_df{i}, ROI_sh{i},coord{i});
