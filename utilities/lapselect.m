@@ -17,7 +17,7 @@ Imaging.time=t;
 Behavior.options=options;
 
 if options.select_frames==1
- Imaging.time=t(options.select_frames);
+ Imaging.time=t(frames);
 end
 
 

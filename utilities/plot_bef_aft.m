@@ -1,4 +1,6 @@
 function [Results]=plot_bef_aft(Results,rows_sub,properties,session,events_mean)
+warning('off','all');
+
 
 col_sub=size(properties,1)/rows_sub;
 bg_title={'All', 'Running epochs', 'Non running epochs'};

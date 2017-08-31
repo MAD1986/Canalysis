@@ -3,7 +3,7 @@
 
 
 
-%% Plot ROI
+%% Add scripts in path
 addpath(genpath('/Users/martial/Documents/GitHub/Phoenix'));
 addpath(genpath('/Users/martial/Documents/GitHub/Canalysis'));
 %% Open mat files with ROI

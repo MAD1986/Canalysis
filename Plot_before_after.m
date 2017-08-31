@@ -1,7 +1,9 @@
 
 %% Analyze before/after for multiple sessions
 %Analyse events and network properties  
-
+%% Add scripts in path
+addpath(genpath('/Users/martial/Documents/GitHub/Phoenix'));
+addpath(genpath('/Users/martial/Documents/GitHub/Canalysis'));
 %% Load files
 % need mat files with 2 sessions ( before / after )
 session={'CTRL', 'TGOT'}; %or other drug, days, context etc
