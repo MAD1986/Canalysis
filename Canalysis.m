@@ -38,10 +38,11 @@ end
 % If calcium trace is only a part of the total
 % imaging session: use only selected frames for behavior 
 options.select_frames=1; %if restrict = 0
+%total nb of frames acquired during the imaging session
 for i=1:sessions
 nb_fr(i)=length(XML{i}.PVScan.Sequence.Frame);
 end
-frames=[{10000:19999} {nb_fr(2)-19999:nb_fr(2)-1}]; %(all = 1:size(C_df{1},1));
+frames=[{1:10000} {nb_fr(2)-20000:nb_fr(2)-1}]; %(all = 1:size(C_df{1},1));
 
 % Restrict calcium data to selected lap
 options.restrict=0; % restrict trace to full lap
@@ -150,8 +151,8 @@ options.smooth_span=3; % span for moving average filter on dF/F (Dombeck = 3)
 options.minevents=3; % Min nb of events during session
 options.Nbin=[2;4;5;8;10;20;25;100]; % Number of bins to test ([2;4;5;8;10;20;25;100] Danielson et al. 2016)
 options.bin_spatial_tuning=100; % Number of bins to compute spatial tuning curve (rate map) -value should be in options.Nbin
-options.Nshuffle=1000; % Nb of shuffle to perform
-options.pvalue=0.01; % Min p value to be considered as significant
+options.Nshuffle=100; % Nb of shuffle to perform
+options.pvalue=0.05; % Min p value to be considered as significant
 options.dispfig=1; % Display figure 
  
 %Function
@@ -160,12 +161,17 @@ for i=1:sessions
 [Place_cell{i}]=tuning_specificity(Place_cell{i},Behavior{i},Events{i},options);
 [Place_cell{i}]=shuffle_place_cell(Place_cell{i},Behavior{i},Events{i},options);
 end
+%Plot tuned ROI (beta)
+for i=1:sessions
+    figure
+tuned_ROI_GUI(Place_cell{i},Imaging{i});
+end
 clear options
 
 %% Save
 %Where to save:
 tic;
-save('04_07', '-v7.3');
+save('M1_04_10', '-v7.3');
 toc;
 
 
