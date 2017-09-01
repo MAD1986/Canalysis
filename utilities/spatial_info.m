@@ -167,6 +167,8 @@ Place_cell.ROI_Spatial_tuning_sorted=ROInb_STC_sorted;
 Place_cell.Spatial_Info.event_map=onset_map;
 Place_cell.Spatial_Info.occupancy_map=occupancy_time_s;
 Place_cell.Spatial_Info.rate_map=rate_map;
+Place_cell.Spatial_Info.rate_map_smooth=rate_map_sm;
+
 Place_cell.Spatial_Info.overall_rate=mean_rate;
 Place_cell.Spatial_Info.proba_bin=proba_bin;
 Place_cell.Spatial_Info.Spatial_Info=SI;
