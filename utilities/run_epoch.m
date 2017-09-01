@@ -39,6 +39,14 @@ time_position=[time position];
 %% Compute speed
 %Resample behavior at same frequency than imaging
 [N,bin]=histc(Cdf_time,time);
+%If missing behavior time
+for idx=1:length(bin)
+    if bin(idx)==0
+        disp('!!! Missing behavior recording data !!!')
+  bin(idx)=bin(idx-1);
+    end
+end
+
 index=bin+1;
 if abs(Cdf_time-time(bin))<abs(Cdf_time-time(bin+1));
 index=bin;
@@ -50,6 +58,7 @@ res_time_position=time_position(bin,:);
 res_cum_position=cum_postion(bin);
 res_position=position(bin);
 end
+
 res_time=res_time_position(:,1);
 
 %Smooth position 

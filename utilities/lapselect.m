@@ -15,12 +15,15 @@ end
 t = timeStampsXML(2:end);
 Imaging.time=t;
 Behavior.options=options;
-
 if options.select_frames==1
- Imaging.time=t(frames);
+ Imaging.time=t(frames); 
+
+% [~,idx_start]=min(abs(Behavior.time - Imaging.time(1)));
+% [~,idx_stop]=min(abs(Behavior.time - Imaging.time(end)));
+% Behavior.time=Behavior.time(idx_start:idx_stop);
+%Behavior.cumulativeposition=Behavior.cumulativeposition(idx_start:idx_stop);
+%Behavior.position=Behavior.position(idx_start:idx_stop);
 end
-
-
 end
 
 if options.restrict==1; % restrict trace to full lap

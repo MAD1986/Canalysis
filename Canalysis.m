@@ -35,7 +35,7 @@ end
 % Using frame timestamps from associated xml file
 %use only selected frames for behavior 
 options.select_frames=1; %if restrict = 0
-frames=[{1:10000} {5530:25529}]; %r(all = 1:size(C_df{1},1));
+frames=[{1:19999} {439:20438}]; %(all = 1:size(C_df{1},1));
 
 % Restrict calcium data to selected lap
 options.restrict=0; % restrict trace to full lap
