@@ -171,7 +171,7 @@ clear options
 %% Save
 %Where to save:
 tic;
-save('M1_04_10', '-v7.3');
+save('3_test', '-v7.3');
 toc;
 
 
