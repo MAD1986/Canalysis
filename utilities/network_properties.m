@@ -1,5 +1,5 @@
 
-function [Network_Properties] = network_properties(Event_Properties,C_df,Cdf_time, options)
+function [Network_Properties] = network_properties(Event_Properties,rec_dur,C_df,Cdf_time, options)
 
 %% Import data
 binary=Event_Properties.onset_binary_analysed;
@@ -9,7 +9,7 @@ onset_offset=Event_Properties.onset_offset_analysed;
 %% Frequency (event/min)
 nb_events=Event_Properties.nb_events; 
 %recording duration : start to end in min
-rec_dur=(Cdf_time(end)-Cdf_time(1))/60;
+%rec_dur=(Cdf_time(end)-Cdf_time(1))/60;
 event_freq=nb_events/rec_dur;
 
 %% Activity rate (AUC/min) 

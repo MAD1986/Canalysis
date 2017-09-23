@@ -135,7 +135,7 @@ options.mindist= 10; % Set minimun distance between peaks (frame)
 options.STD_pro=2; % Set minimun prominence of peak ( X * STD noise)
 % Network parameters
 % synchronous epochs based on Rajasethupathy et al. 2015
-options.Nshuffle=1000; % Nb of shuffle for synchronous activity 
+options.Nshuffle=10; % Nb of shuffle for synchronous activity 
 options.pmin=0.05; % min p value to be considered as significant
 options.minframes=3; %consecutive frames with activity above the significance threshold
 

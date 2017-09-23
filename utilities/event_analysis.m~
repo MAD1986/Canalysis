@@ -37,16 +37,16 @@ onset_ones{2}=Events.Run.run_onset_ones;
 onset_ones{3}=Events.NoRun.norun_onset_ones;
 mean_fr=mean(diff(Cdf_time));
 rec_dur{1}=(Cdf_time(end)-Cdf_time(1))/60;
-rec_dur{2}=sum(Behavior.run_ones)/(1/mean_fr)/60;
+rec_dur{2}=sum(Behavior.run_ones)*(1/mean_fr)/60;
 rec_dur{3}=rec_dur{1}-rec_dur{2};
 
 %% Measure Ca2+ events properties 
-for i=1:3
+for i=2  
 [Event_Properties{i}]=event_properties(C_df, onset_offset{i}, options);
 end
 %% Network properties
-for i=1:3
-[Network_Properties{i}] = network_properties(Event_Properties{i},rec_dur{i},C_df,Cdf_time, options);
+for i=2
+[Network_Properties{i}] = network_properties(Event_Properties{i},C_df,Cdf_time, options);
 end
 %% Distribution histogram and PCA
 for i=1:1

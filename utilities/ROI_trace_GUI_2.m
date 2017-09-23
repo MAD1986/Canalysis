@@ -51,7 +51,7 @@ pos=1:3:(length(ROI)*length(ROI));
 
 for i=1:length(ROI)
 subplot(length(ROI),3,pos(i)+1)
-%]imshow(Cn_mean);
+%imshow(Cn_mean);
 %hold on
 ROI_shape=(ROI_sh{i}(:,:,r));
 ROI_shape( ~any(ROI_shape,2), : ) = [];  %rows
@@ -60,6 +60,7 @@ imagesc(ROI_shape);
 
 subplot(length(ROI),3,pos(i))
 %imagesc(Cn_mean);
+%imshow(Cn_mean);
 imagesc(ROI{i}.Cn_max)
 hold on
 plot(coord{i}{r}(:,2), coord{i}{r}(:,1), 'w', 'LineWidth', 2)
@@ -70,7 +71,6 @@ title(sprintf(['ROI ' num2str(r)] ),'fontsize',16,'fontweight','bold');
 legend(leg{i});
 
 end
-
 end
 end
 

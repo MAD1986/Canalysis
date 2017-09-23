@@ -1,6 +1,10 @@
-%% TO DO
-%Correlation score of ROI_shape
+%% Plot ROI
 
+% need mat file with ROI :
+% A2, Cn_max, keep, options from CNMF
+
+% mat file with :
+% expDffMedZeroed or C_df from CNMF
 
 
 %% Add scripts in path
@@ -37,7 +41,6 @@ elseif plot_keep==false;
 end
 figure
 for i=1:length(ROI)
-%Y_plot{i} =double( repmat(ROI{i}.Cn_max,[1,1,plot_fr]) );
 A2_keep{i}=ROI{i}.A2(:,keep_all);
 ROI_sh{i}=reshape(full(A2_keep{i}),FOV,FOV,size(A2_keep{i},2));
 All_ROI{i}=sum(ROI_sh{i},3);
@@ -45,7 +48,7 @@ subplot(length(ROI),1,i)
 imagesc(All_ROI{i})
 end
 for i=1:length(ROI)
-    figure
+figure
 plot_contours(A2_keep{i},ROI{i}.Cn_max,ROI{i}.options,1); 
 legend(['ROI session ' num2str(i)]);
 title(['session ' num2str(i)]);
@@ -91,4 +94,5 @@ color=[{'g'} {'m'} {'b'} {'y'}];
 %for i=1:3
 %ROI_trace_GUI_session(ROI{i},C_df{i}, ROI_sh{i},coord{i});
 %end
+
 
