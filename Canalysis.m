@@ -135,7 +135,7 @@ options.mindist= 10; % Set minimun distance between peaks (frame)
 options.STD_pro=2; % Set minimun prominence of peak ( X * STD noise)
 % Network parameters
 % synchronous epochs based on Rajasethupathy et al. 2015
-options.Nshuffle=10; % Nb of shuffle for synchronous activity 
+options.Nshuffle=1000; % Nb of shuffle for synchronous activity 
 options.pmin=0.05; % min p value to be considered as significant
 options.minframes=3; %consecutive frames with activity above the significance threshold
 
@@ -151,7 +151,7 @@ options.smooth_span=3; % span for moving average filter on dF/F (Dombeck = 3)
 options.minevents=3; % Min nb of events during session
 options.Nbin=[2;4;5;8;10;20;25;100]; % Number of bins to test ([2;4;5;8;10;20;25;100] Danielson et al. 2016)
 options.bin_spatial_tuning=100; % Number of bins to compute spatial tuning curve (rate map) -value should be in options.Nbin
-options.Nshuffle=100; % Nb of shuffle to perform
+options.Nshuffle=1000; % Nb of shuffle to perform
 options.pvalue=0.05; % Min p value to be considered as significant
 options.dispfig=1; % Display figure 
  
