@@ -23,7 +23,7 @@ end
 % Set parameters
 options.mindist=10; %min distance before counting a new lap (cm)
 options.acqHz=10000; % behavior acquisition frequency (Hz)
-options.textures=1; % 1= find RFID for each texture; 0 = no RFID for texture
+options.textures=0; % 1= find RFID for each texture; 0 = no RFID for texture
 options.dispfig=1; % Display figure (lap, RFID)
 %IF find RFID for each texture
 %voltage [min max] signal for each RFID

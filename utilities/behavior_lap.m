@@ -82,7 +82,8 @@ cum_position=positionVector*0.0155986;
 
 %% Register postion of RFID for each texture
 
-if RFIDtext==1
+%if RFIDtext==1
+if options.textures==true
 RFID=options.RFID;
 % textures RFID signal
 texture=singleStim1CsvOut(:,3);
@@ -126,13 +127,15 @@ texind{ii}=find(findtex{ii}==1);
 texloc{ii}=LOCS_keep(texind{ii});
 end
 end
+
+
 % Make a binary (0 and 1 when RFID)
 tex_binary=(zeros(size(texture,1),size(RFID,2)));
 for ii=1:size(RFID,2);
 tex_binary(texloc{ii},ii)=1;
 end
 % Make structure
-Behavior.texture=tex_binary;
+Behavior.texture_signal=tex_binary;
 end
 
 %% Get the position of lap RFID and restart position at each lap 
@@ -208,7 +211,14 @@ end
 lick=csvStimRaw(:,7);
 time_position=[time position];
 
-
+%% Find texture (RFID) position
+if options.textures==true
+    for ii=1:size(RFID,2);
+tex_pos{ii}=position(texloc{ii});
+    end
+Behavior.texture_position=tex_pos;  
+end
+    
 
 %% Make structure
 Behavior.time=time;

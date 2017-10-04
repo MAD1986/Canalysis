@@ -51,7 +51,7 @@ endlap=options.endlap;
 end
 
 if options.textures==true
-texture=Behavior.texture;
+texture=Behavior.texture_signal;
 end
 
 
@@ -96,7 +96,7 @@ cum_position_R=cum_position(b_in);
 % restrict texture 
 if options.textures==true
 texture_R=texture(b_in,:);
-Behavior.restricted.texture=texture_R;
+Behavior.restricted.texture_signal=texture_R;
 end
 
 % Restrict lap
