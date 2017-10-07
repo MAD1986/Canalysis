@@ -5,11 +5,15 @@ for i=1:sessions % or what you used
 Spatialinfo{i}.rate_map.ordered_rate_map=Place_cell{i}.Spatial_tuning_curve_sorted  ;
 Spatialinfo{i}.rate_map.normalized_rate_map_smoothed=Place_cell{i}.Spatial_tuning_curve;
 Spatialinfo{i}.rate_map.ROI_odered_rate_map=Place_cell{i}.ROI_Spatial_tuning_sorted;
+
 Spatialinfo{i}.rate_map.rate_map_smoothed=Place_cell{i}.Spatial_Info.rate_map_smooth{8}   ;
 TunedCells{i}.TunedROI= Place_cell{i}.Tuned_ROI  ;
 TunedCells{i}.Spatial_info.significantROI=Place_cell{1, 1}.Spatial_Info.significant_ROI    ; 
 TunedCells{i}.TuningSpecificity.significantROI=Place_cell{1, 1}.Tuning_Specificity.significant_ROI  ; 
 end
+
+Spatialinfo{i}.rate_map.normalized_rate_map_smoothed;
+
 
 %% For your scripts
 TunedCells=SpatiallyTunedCells;
