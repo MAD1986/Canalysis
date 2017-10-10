@@ -26,7 +26,11 @@ end
 % Plot only keep ROI:
 plot_keep=0; % 0 or 1
 corr_scor_min=0.85; %min correlation score for ROI between session 
-%% plot
+
+%% plot contour
+plot_contour=0
+
+if plot_contour == 1  
 FOV=length(ROI{1}.Cn_max);
 if plot_keep==true; % 0 or 1
     if length(ROI)==3
@@ -53,14 +57,16 @@ plot_contours(A2_keep{i},ROI{i}.Cn_max,ROI{i}.options,1);
 legend(['ROI session ' num2str(i)]);
 title(['session ' num2str(i)]);
 end
+end
 
-%% Fix bug not same nb ROI:
+%% Show components on image + dF for all sessions
+
+% Fix bug not same nb ROI:
 for i=1:size(C_df,2)
 sizeROI(i)=size(C_df{i},2);
 end
 minROI=min(sizeROI);
 
-%% Show components on image + dF for all sessions
 %Get coordinates 
 for i=1:size(C_df,2)
 for r=1:minROI

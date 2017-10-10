@@ -40,18 +40,20 @@ for i = sessions
 for ii= sessions
 for iii=1:size(rate_map{i},1)  
 [PVcorr{i}{ii}(:,iii)] = corr(rate_map{i}(iii,:)',rate_map{ii}(iii,:)', 'rows', 'complete');
-PVcorrind{i}{ii}=[i ii];
+[PVcorr_tuned{i}{ii}(:,iii)] = corr(rate_map{i}(iii,tuned_ROI)',rate_map{ii}(iii,tuned_ROI)', 'rows', 'complete');
 PVcorr_mean{i}{ii}= nanmean(PVcorr{i}{ii});
+PVcorr_tuned_mean{i}{ii}=nanmean(PVcorr_tuned{i}{ii});
 end
 end
 end
 
-for i = sessions
-for ii= sessions 
-PVcorr_tuned{i}{ii}=PVcorr{i}{ii}(:,tuned_ROI);
-PVcorr_tuned_mean{i}{ii}=nanmean(PVcorr_tuned{i}{ii});
-end
-end 
+%WRONG
+% for i = sessions
+% for ii= sessions 
+% PVcorr_tuned{i}{ii}=PVcorr{i}{ii}(:,tuned_ROI);
+% PVcorr_tuned_mean{i}{ii}=nanmean(PVcorr_tuned{i}{ii});
+% end
+% end 
 
 %Make structure
 % Spatial_correlation.PV_correlation.AllROI.PV_matrix=PVmatrix;
@@ -113,11 +115,13 @@ TC_corr_test(:,i)=TCcorr{plot_corr{i}(1)}{plot_corr{i}(end)};
 TC_corr_tuned_test(:,i)=TCcorr_tuned{plot_corr{i}(1)}{plot_corr{i}(end)};
 end 
 
-
-if multcomp==1
  for i=1:size(plot_corr,2)
 ttl{i}=[name{plot_corr{i}(1)} ' VS '  name{plot_corr{i}(end)}];
 end 
+
+
+if multcomp==1
+
 %anova PV corr
 figure
 [p_PV,tbl_PV,stats_PV] = anova1(PV_corr_test);
@@ -134,7 +138,7 @@ figure
 c_TC = multcompare(stats_TC);
 title({'TC correlation all ROI', ttl{1:size(TC_corr_test,2)}})
 
-%anova TC corr all ROI
+%anova TC corr tuned ROI
 figure
 [p_TC_t,tbl_TC_t,stats_TC_t] = anova1(TC_corr_tuned_test);
 title({'TC correlation tuned ROI', ttl{1:size(TC_corr_tuned_test,2)}})
@@ -152,7 +156,6 @@ Spatial_correlation.PV_correlation.TunedROI.PVcorr_tuned=PV_corr_tuned_test;
 Spatial_correlation.TC_correlation.AllROI.TCcorr=TC_corr_test;
 Spatial_correlation.TC_correlation.TunedROI.TCcorr=TC_corr_tuned_test;
 Spatial_correlation.TC_correlation.Index=ttl;
-Spatial_correlation.PV_correlation.Index=ttl;
 
 end
 

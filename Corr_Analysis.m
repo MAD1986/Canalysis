@@ -3,7 +3,7 @@
 
 %% Define tuned ROI
 %   tuned for session
-Spatial_correlation.options.tuned_session=[1,3]; % If multitple use [X,Y]
+Spatial_correlation.options.tuned_session=[1]; % If multitple use [X,Y]
 %   cristeria1:
 %'both' = tuning specificity + spatial information
 %'tuning' = tuning specificity
@@ -18,10 +18,10 @@ Spatial_correlation.options.tuned_criteria2='or';
 Spatial_correlation=tuned_ROI(Spatial_correlation, Place_cell);
 
 %% Plot rate map ordered
-Spatial_correlation.options.sessions=1:3; % X:Y plot session X to Y
-Spatial_correlation.options.name=[{'STD1'}, {'MIS1'}, {'STD2'}]; % name of sessions
+Spatial_correlation.options.sessions=1:2; % X:Y plot session X to Y
+Spatial_correlation.options.name=[{'STD1'}, {'STD2'}, {'STD2'}]; % name of sessions
 Spatial_correlation.options.order=1; %order rate map for session # (1 to 3)
-Spatial_correlation.options.ratemapsm=0; %smooth rate map (cosmetic) (0 = no smooth)
+Spatial_correlation.options.ratemapsm=2; %smooth rate map (cosmetic) (0 = no smooth)
 
 [Spatial_correlation] = plot_tuning(Spatial_correlation,Place_cell);
 
@@ -29,13 +29,14 @@ Spatial_correlation.options.ratemapsm=0; %smooth rate map (cosmetic) (0 = no smo
 %For all and only tuned neurons 
 %PV correlation = 
 %TC correlation =
-Spatial_correlation.options.sessions=1:3; %sessions to compare
+Spatial_correlation.options.sessions=1:2; %sessions to compare
 
 %plot_corr(1)={[x;y],[x;z], ...}: plot correlation session X vs Y and X vs Z
-plot_corr={ [1;2], [2;3], [1;3] } ; 
+%plot_corr={ [1;2], [2;3], [1;3] } ; 
+plot_corr={ [1;2] } ; 
 
 %perform multiple comparison analysis
-Spatial_correlation.options.multcomp=1;
+Spatial_correlation.options.multcomp=0;
 
 
 [Spatial_correlation] = corr_score(Spatial_correlation,Place_cell, plot_corr);
