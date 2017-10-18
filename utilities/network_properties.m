@@ -17,8 +17,14 @@ event_freq=nb_events/rec_dur;
 AUC=Event_Properties.AUC;
 for i=1:size(AUC,2)
 meanAUC(i)=nanmean(AUC{i});
+totalAUC(i)=nansum(AUC{i});
+if isempty(AUC{i})==1
+ totalAUC(i)=nan;
 end
-AUC_rate=meanAUC/rec_dur;
+end
+% AUC_rate=meanAUC/rec_dur;
+AUC_rate=totalAUC/rec_dur;
+
 
 %% Correlation between cell
 % See Rajasethupathy et al. 2015

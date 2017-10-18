@@ -183,7 +183,7 @@ clear options
 
 %% Save
 tic;
-save('Result_dendrites_only', '-v7.3');
+save('Result_soma_only', '-v7.3');
 toc;
 
 

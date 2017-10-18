@@ -42,12 +42,18 @@ plot_component(round(r))
 end
 
 function ROI_nb(r) 
-rem_ROI=round(get(sld,'value'));
+remove_ROI = round(get(sld,'value'));
+
+
+
 end
+
 
 
 function plot_component(r) 
 pos=1:3:(length(ROI)*length(ROI));
+
+
 
 for i=1:length(ROI)
 subplot(length(ROI),3,pos(i)+1)
@@ -69,6 +75,8 @@ subplot(length(ROI),3,pos(i)+2)
 plot(C_df{i}(:,r),color{i},'linewidth',1);
 title(sprintf(['ROI ' num2str(r)] ),'fontsize',16,'fontweight','bold');
 legend(leg{i});
+
+
 
 end
 end

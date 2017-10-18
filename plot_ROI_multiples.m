@@ -26,11 +26,7 @@ end
 % Plot only keep ROI:
 plot_keep=0; % 0 or 1
 corr_scor_min=0.85; %min correlation score for ROI between session 
-
 %% plot contour
-plot_contour=0
-
-if plot_contour == 1  
 FOV=length(ROI{1}.Cn_max);
 if plot_keep==true; % 0 or 1
     if length(ROI)==3
@@ -43,6 +39,7 @@ elseif length(ROI)==1
 elseif plot_keep==false;
     keep_all=1:size(C_df{1},2);
 end
+
 figure
 for i=1:length(ROI)
 A2_keep{i}=ROI{i}.A2(:,keep_all);
@@ -57,8 +54,6 @@ plot_contours(A2_keep{i},ROI{i}.Cn_max,ROI{i}.options,1);
 legend(['ROI session ' num2str(i)]);
 title(['session ' num2str(i)]);
 end
-end
-
 %% Show components on image + dF for all sessions
 
 % Fix bug not same nb ROI:
@@ -91,7 +86,7 @@ rm_ROI=unique(cell2mat(rem_ROI));
 
 %set color of contour for sessions
 %all colors : https://www.mathworks.com/help/matlab/ref/colorspec.html
-color=[{'g'} {'m'} {'b'} {'y'}];
+color=[{'g'} {'m'} {'b'} {'r'} {'k'} {'c'}];
 %Plot all session 
 %ROI_trace_GUI(ROI,C_df, ROI_sh,coord,color);
 %OR
