@@ -86,15 +86,18 @@ new_ROI=setdiff(ROI_pie{pie_chart(2)}, ROI_pie{pie_chart(1)});
 new_nb=numel(new_ROI);
 retained_ROI=intersect(ROI_pie{pie_chart(2)}, ROI_pie{pie_chart(1)});
 retained_nb=numel(retained_ROI);
+
 lost_new=[lost_nb new_nb];
+figure
 for i=pie_chart
 pie_session{i}=[retained_nb lost_new(i)];
+subplot(1,i,2)
+labels = {'Taxes','Expenses'};
+pie(pie_session{i})
 end
-pie_labels{1}={'Retained', 'Lost'};
-pie_labels{2}={'Retained', 'New'};
+    
 
-Spatial_correlation.pie_chart=pie_session;
-Spatial_correlation.pie_labels=pie_labels;
+
 
 
 % %% Venn diagramm

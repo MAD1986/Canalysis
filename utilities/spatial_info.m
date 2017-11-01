@@ -67,6 +67,16 @@ total_occupancy=sum(count_bin{i})*avg_fr; %total time
 proba_bin{i}=count_bin{i}/sum(count_bin{i}); % time spend / total time
 end
 
+% Position for each bin dF/F
+for i=1:length(options.Nbin)
+for binN=1:options.Nbin(i)
+pos_bin{i}{binN}=run_position(find(bin{i}==binN),1);
+mean_pos_bin{i}(binN)=mean(pos_bin{i}{binN});
+end
+end
+
+
+
 %% Rate maps : total number of onset that occurred in a location
 %bin divided by the time the animal spent in that bin
 % onset map / occupancy
@@ -165,6 +175,9 @@ Place_cell.Spatial_tuning_dF_sorted=STC_dF_sorted;
 Place_cell.ROI_Spatial_tuning_sorted=ROInb_STC_sorted;
 
 Place_cell.Spatial_Info.event_map=onset_map;
+Place_cell.Spatial_Info.mean_dF_map=dF_map;
+Place_cell.Spatial_Info.mean_dF_map_smooth=dF_map_sm;
+
 Place_cell.Spatial_Info.occupancy_map=occupancy_time_s;
 Place_cell.Spatial_Info.rate_map=rate_map;
 Place_cell.Spatial_Info.rate_map_smooth=rate_map_sm;
@@ -176,6 +189,7 @@ Place_cell.Spatial_Info.Spatial_Info_Skaggs=SIS;
 Place_cell.Spatial_Info.Run_onset_bin=run_onset_bin;
 
 Place_cell.Bin=bin;
+Place_cell.Position_Bin=mean_pos_bin;
 %Spatialinfo.timebin=time_bin_sec;
 %Spatialinfo.positionbin=position_bin;
 %Spatialinfo.onset_bin=onset_bin;

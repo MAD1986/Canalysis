@@ -92,8 +92,8 @@ color=[{'g'} {'m'} {'b'} {'r'} {'k'} {'c'}];
 %OR
 [rem_ROI]=ROI_trace_GUI_2(ROI,C_df, ROI_sh,coord,color,rem_ROI);
 %Plot only choosen session 
-%for i=1:3
-%ROI_trace_GUI_session(ROI{i},C_df{i}, ROI_sh{i},coord{i});
-%end
+% %for i=1:3
+% %ROI_trace_GUI_session(ROI{i},C_df{i}, ROI_sh{i},coord{i});
+% %end
 
 

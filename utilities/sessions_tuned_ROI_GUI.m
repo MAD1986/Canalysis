@@ -33,8 +33,8 @@ function plot_component(r)
  pos=1:3:(length(sessions)*length(sessions));
    for i=1:length(sessions)
 subplot(length(sessions),3,pos(i)+1)
-plot(Place_cell{sessions(i)}.Spatial_tuning_curve(:,Spatial_correlation.tunedROI(r)))
-
+% plot(Place_cell{sessions(i)}.Spatial_tuning_curve(:,Spatial_correlation.tunedROI(r)))
+plot(Place_cell{sessions(i)}.Spatial_Info.rate_map_smooth{8}(:,Spatial_correlation.tunedROI(r)))
 subplot(length(sessions),3,pos(i))
 compass(Place_cell{sessions(i)}.Tuning_Specificity.tuning_vector{Spatial_correlation.tunedROI(r)})
 hold on

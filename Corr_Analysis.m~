@@ -56,13 +56,11 @@ Spatial_correlation.options.multcomp=0;
 [Spatial_correlation] = corr_score(Spatial_correlation,Place_cell, plot_corr);
 %% Textures 
 %only between 2 sessions (STD vs MIS)
-Spatial_correlation.options.sessions=1:2;  % Find textures for sessions [X:Y] X to Y
+Spatial_correlation.options.sessions=1:2; % Find textures for sessions [X:Y] X to Y
 Spatial_correlation.options.textures.bin_before_RFID=5; % how many bins before RFID signal considered as same texture
 Spatial_correlation.options.textures.bin_after_RFID=5; % how many bins after RFID signal considered as same texture
 Spatial_correlation.options.textures.min_change=10;    %rotated texture= change > X bins
 Spatial_correlation.options.cmap='jet'; %use colormap http://www.mathworks.com/help/matlab/ref/colormap.html
-%Function
-[Spatial_correlation] = textures(Behavior,Place_cell,Spatial_correlation);
 
 %% Save
  save('M6_Correlation_tuned_STD1_or_MIS2.mat', 'Spatial_correlation')

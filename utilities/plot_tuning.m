@@ -89,19 +89,19 @@ end
 %all ROI
 if sm>0
 figure
-for i = sessions 
+for i = 1:length(sessions) 
 subplot(1, length(sessions),i)
-imagesc(ordered_map_sm{i});
+imagesc(ordered_map_sm{sessions(i)});
 colormap(rate_cmap);
-title([Spatial_correlation.options.name{i}, 'rate map All ROI '])
+title([Spatial_correlation.options.name{sessions(i)}, 'rate map All ROI '])
 end
 %Tuned ROI
 figure
-for i = sessions 
+for i = 1:length(sessions) 
 subplot(1, length(sessions),i)
-imagesc(ordered_map_sm{i}(ROI_OR_tuned_idx,:));
+imagesc(ordered_map_sm{sessions(i)}(ROI_OR_tuned_idx,:));
 colormap(rate_cmap);
-title([{Spatial_correlation.options.name{i}, 'rate map tuned ROI', Spatial_correlation.options.name_criteria1, ['session '  num2str(tuned_ses)]}]);
+title([{Spatial_correlation.options.name{sessions(i)}, 'rate map tuned ROI', Spatial_correlation.options.name_criteria1, ['session '  num2str(tuned_ses)]}]);
 end
 end
 
@@ -109,38 +109,38 @@ end
 %all ROI
 if sm==0
 figure
-for i = sessions 
+for i = 1:length(sessions) 
 subplot(1, length(sessions),i)
-imagesc(ordered_map{i});
+imagesc(ordered_map{sessions(i)});
 colormap(rate_cmap);
-title([Spatial_correlation.options.name{i}, 'rate map All ROI '])
+title([Spatial_correlation.options.name{sessions(i)}, 'rate map All ROI '])
 end
 %Tuned ROI
 figure
-for i = sessions 
+for i = 1:length(sessions)  
 subplot(1, length(sessions),i)
-imagesc(ordered_map{i}(ROI_OR_tuned_idx,:));
+imagesc(ordered_map{sessions(i)}(ROI_OR_tuned_idx,:));
 colormap(rate_cmap);
-title([{Spatial_correlation.options.name{i}, 'rate map tuned ROI', Spatial_correlation.options.name_criteria1, ['session ' num2str(tuned_ses)]}])
+title([{Spatial_correlation.options.name{sessions(i)}, 'rate map tuned ROI', Spatial_correlation.options.name_criteria1, ['session ' num2str(tuned_ses)]}])
 end
 end
 
 
 % dF map
 figure
-for i = sessions 
+for i = 1:length(sessions)  
 subplot(1, length(sessions),i)
-imagesc(ordered_dF{i});
+imagesc(ordered_dF{sessions(i)});
 colormap(rate_cmap);
-title([Spatial_correlation.options.name{i}, 'dF map All ROI '])
+title([Spatial_correlation.options.name{sessions(i)}, 'dF map All ROI '])
 end
 %Tuned ROI
 figure
-for i = sessions 
+for i = 1:length(sessions) 
 subplot(1, length(sessions),i)
-imagesc(ordered_dF{i}(ROI_OR_tuned_idx,:));
+imagesc(ordered_dF{sessions(i)}(ROI_OR_tuned_idx,:));
 colormap(rate_cmap);
-title([{Spatial_correlation.options.name{i}, 'dF map tuned ROI', Spatial_correlation.options.name_criteria1, ['session ' num2str(tuned_ses)]}])
+title([{Spatial_correlation.options.name{sessions(i)}, 'dF map tuned ROI', Spatial_correlation.options.name_criteria1, ['session ' num2str(tuned_ses)]}])
 end
 
 
