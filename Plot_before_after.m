@@ -13,6 +13,7 @@ listmat = dir('*.mat'); % look for all the mat files (alphabetical order)
 for exp = 1:length(listmat)
 matfiles{exp} = load((listmat(exp).name));
 end
+
 %% Make table with mean
 [events_mean_cell,network_mean_cell, properties,network]= comb_mean(matfiles,session);
 %% Plot all 

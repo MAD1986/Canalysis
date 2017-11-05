@@ -80,6 +80,10 @@ Spatial_correlation.options.name_criteria1= name_criteria1;
 for i=1:size(idx_ROI_pie,1)
 ROI_pie{i}=find(idx_ROI_pie(i,:)==1);
 end
+nb_tunedROI=[sum(idx_ROI_pie(pie_chart(1),:)') sum(idx_ROI_pie(pie_chart(2),:)')];
+tuned_tot=unique([ROI_pie{pie_chart(1)} ROI_pie{pie_chart(2)}]);
+nb_tuned_tot=numel(tuned_tot);
+
 lost_ROI=setdiff(ROI_pie{pie_chart(1)}, ROI_pie{pie_chart(2)});
 lost_nb=numel(lost_ROI);
 new_ROI=setdiff(ROI_pie{pie_chart(2)}, ROI_pie{pie_chart(1)});
@@ -87,14 +91,16 @@ new_nb=numel(new_ROI);
 retained_ROI=intersect(ROI_pie{pie_chart(2)}, ROI_pie{pie_chart(1)});
 retained_nb=numel(retained_ROI);
 lost_new=[lost_nb new_nb];
-for i=pie_chart
+for i=1:size(pie_chart,2)
 pie_session{i}=[retained_nb lost_new(i)];
 end
 pie_labels{1}={'Retained', 'Lost'};
 pie_labels{2}={'Retained', 'New'};
 
-Spatial_correlation.pie_chart=pie_session;
-Spatial_correlation.pie_labels=pie_labels;
+chart_all=[retained_nb new_nb lost_nb];
+
+Spatial_correlation.pie_chart=chart_all;
+%Spatial_correlation.pie_labels=pie_labels;
 
 
 % %% Venn diagramm

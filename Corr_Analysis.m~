@@ -11,7 +11,7 @@ Spatial_correlation.options.tuned_criteria1='both';
 %'info'= spatial information
 
             %   criteria2:
-Spatial_correlation.options.tuned_criteria2='or'; 
+Spatial_correlation.options.tuned_criteria2='and'; 
 %or = tuned ROI in one of the selected session 
 %and= tuned ROI in all of the selected sessions
 
@@ -30,10 +30,10 @@ sessions_tuned_ROI_GUI(Place_cell,Imaging,Behavior,Spatial_correlation, sessions
 end
 %% Plot rate map ordered
 Spatial_correlation.options.sessions=1:2; % X:Y plot session X to Y
-Spatial_correlation.options.order=1; %order rate map for session # (1 to 3)
+Spatial_correlation.options.order=4; %order rate map for session # (1 to 3)
 Spatial_correlation.options.ratemapsm=1; %smooth rate map (cosmetic) (0 = no smooth)
 %Spatial_correlation.options.name=[{'STD'}, {'MIS'}, {'STD1'}, {'STD2'} ]; % name of sessions
- Spatial_correlation.options.name=[{'D1'}, {'D2'}, {'D3'} {'D6'}, {'D7'}, {'D5 2'}]; % name of sessions
+Spatial_correlation.options.name=[{'D1'}, {'D2'}, {'D3'} {'D4'}, {'D5 2'}, {'D5 2'}]; % name of sessions
 Spatial_correlation.options.bw_cmap=0; %use custom B%W colormap
 Spatial_correlation.options.cmap='jet'; %use colormap http://www.mathworks.com/help/matlab/ref/colormap.html
 % 'jet' 'hot' 'parula'
@@ -56,11 +56,13 @@ Spatial_correlation.options.multcomp=0;
 [Spatial_correlation] = corr_score(Spatial_correlation,Place_cell, plot_corr);
 %% Textures 
 %only between 2 sessions (STD vs MIS)
-Spatial_correlation.options.sessions=1:2; % Find textures for sessions [X:Y] X to Y
+Spatial_correlation.options.sessions=1:2;  % Find textures for sessions [X:Y] X to Y
 Spatial_correlation.options.textures.bin_before_RFID=5; % how many bins before RFID signal considered as same texture
 Spatial_correlation.options.textures.bin_after_RFID=5; % how many bins after RFID signal considered as same texture
 Spatial_correlation.options.textures.min_change=10;    %rotated texture= change > X bins
 Spatial_correlation.options.cmap='jet'; %use colormap http://www.mathworks.com/help/matlab/ref/colormap.html
+%Function
+[Spatial_correlation] = textures(Behavior,Place_cell,Spatial_correlation);
 
 %% Save
  save('M6_Correlation_tuned_STD1_or_MIS2.mat', 'Spatial_correlation')
