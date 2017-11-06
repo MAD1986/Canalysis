@@ -11,28 +11,17 @@
 addpath(genpath('/Users/martial/Documents/GitHub/Phoenix'));
 addpath(genpath('/Users/martial/Documents/GitHub/Canalysis'));
 %% Open mat files with ROI
-%FOR RZ you need to have multiple .mat files 
-%(1_sessionA_ROI.mat, 2_sessionB_ROI.mat,...)
-%   NEED:
-%   A2,Cn,Cn_max,Coor,b2,center,f2,keep
-
+%FOR RZ y
 listmat = dir('*.mat'); %will look for all the mat files
 for i = 1:length(listmat)
 ROI{i} = load((listmat(i).name));
 end
 
 %% Open mat files with cdf
-%FOR RZ you need to have multiple .mat files 
-%(1_sessionA_Cdf.mat, 2_sessionB_Cdf.mat,...)
-%   NEED:
-%   A2,Cn,Cn_max,Coor,b2,center,f2,keep
-
 listmat = dir('*.mat'); %will look for all the mat files
 for i = 1:length(listmat)
 cdf{i} = load((listmat(i).name));
-%to change the type of signal to import:
-%Replace: expDffMedZeroed with C_df / C_dec / F_dff / S ..
-C_df{i}=cdf{i}.expDffMedZeroed; 
+C_df{i}=cdf{i}.expDffMedZeroed; % or C_df or ...
 C_df{i}=(full(C_df{i})');
 end
 %% Options
