@@ -2,10 +2,9 @@
 addpath(genpath('/Users/martial/Documents/GitHub/Canalysis'));
 %% Define tuned ROI
 %  Define tuned for session:
-Spatial_correlation.options.tuned_session=[1]; % If multitple use [X,Y]
-
+Spatial_correlation.options.tuned_session=[1,2]; % If multitple use [X,Y]
             %   cristeria1:
-Spatial_correlation.options.tuned_criteria1='both';
+Spatial_correlation.options.tuned_criteria1='tuning';
 %'both' = tuning specificity + spatial information
 %'tuning' = tuning specificity
 %'info'= spatial information
@@ -43,6 +42,7 @@ Spatial_correlation.options.cmap='jet'; %use colormap http://www.mathworks.com/h
 %For all and only tuned neurons 
 %PV correlation =  Population correlation
 %TC correlation =  Tuning curve correlation
+Spatial_correlation.options.name=[{'D1'}, {'D2'}, {'D3'} {'D4'}, {'D5 2'}, {'D5 2'}]; % name of sessions
 Spatial_correlation.options.sessions=1:2; %sessions to compare
 Spatial_correlation.options.bw_cmap=0; %use custom B%W colormap
 Spatial_correlation.options.cmap='jet'; %use colormap http://www.mathworks.com/help/matlab/ref/colormap.html
@@ -56,15 +56,17 @@ Spatial_correlation.options.multcomp=0;
 [Spatial_correlation] = corr_score(Spatial_correlation,Place_cell, plot_corr);
 %% Textures 
 %only between 2 sessions (STD vs MIS)
+opt.text=1;
+if opt.text==1
 Spatial_correlation.options.sessions=1:2;  % Find textures for sessions [X:Y] X to Y
 Spatial_correlation.options.textures.bin_before_RFID=3; % how many bins before RFID signal considered as same texture
 Spatial_correlation.options.textures.bin_after_RFID=2; % how many bins after RFID signal considered as same texture
 Spatial_correlation.options.textures.min_change=10;    %rotated texture= change > X bins
 %Function
 [Spatial_correlation] = textures(Behavior,Place_cell,Spatial_correlation);
-
+end
 %% Save
- save('M6_Correlation_tuned_STD1_or_MIS2.mat', 'Spatial_correlation')
+ save('M6_Correlation_tuning_spe_STD1_and_MIS2.mat', 'Spatial_correlation')
  clear 
 
  
@@ -81,19 +83,38 @@ for exp = 1:length(listmat)
 PV_Corr_all(:,exp)=matfiles{exp}.Spatial_correlation.PV_correlation.AllROI.PVcorr   ;
 PV_Corr_Tuned(:,exp)=matfiles{exp}.Spatial_correlation.PV_correlation.TunedROI.PVcorr_tuned ;
 TC_Corr_Tuned{exp}=matfiles{exp}.Spatial_correlation.TC_correlation.TunedROI.TCcorr  ;
+%If texture analysis
+opt.text=1;
+if opt.text==1
+PV_Corr_all_retained(:,exp)=matfiles{exp}.Spatial_correlation.PV_correlation.AllROI.retained_bins.PVcorr   ;
+TC_Corr_Tuned_retained{exp}=matfiles{exp}.Spatial_correlation.TC_correlation.TunedROI.retained_bins.TCcorr  ;
+PV_Corr_all_swapped(:,exp)=matfiles{exp}.Spatial_correlation.PV_correlation.AllROI.swapped_bins.PVcorr   ;
+TC_Corr_Tuned_swapped{exp}=matfiles{exp}.Spatial_correlation.TC_correlation.TunedROI.swapped_bins.TCcorr  ;
+name{exp}=listmat(exp).name;
 end
+end
+
 Re_PV_Corr_all=reshape(PV_Corr_all,[],1);
 Re_PV_Corr_Tuned=reshape(PV_Corr_Tuned,[],1);
 Re_TC_Corr_Tuned=cat(1, TC_Corr_Tuned{:});
-
 Corr_Score.All.PV_Corr=PV_Corr_all;
 Corr_Score.All.PV_Corr_Col=Re_PV_Corr_all;
 Corr_Score.Tuned.PV_Corr=PV_Corr_Tuned;
 Corr_Score.Tuned.PV_Corr_Col=Re_PV_Corr_Tuned;
 Corr_Score.Tuned.TC_Corr=TC_Corr_Tuned;
 Corr_Score.Tuned.TC_Corr_Col=Re_TC_Corr_Tuned;
+Corr_Score.Name=name;
 
-save('All_Corr_Tuned_STD1_or_MIS2.mat', 'Corr_Score')
+%If texture analysis
+if opt.text==1
+Corr_Score.All.PV_Corr_retained=PV_Corr_all_retained;
+Corr_Score.All.PV_Corr_swapped=PV_Corr_all_swapped;
+Corr_Score.Tuned.TC_Corr_retained=TC_Corr_Tuned_retained;
+Corr_Score.Tuned.TC_Corr_swapped=TC_Corr_Tuned_swapped;
+end
+
+
+save('All_Corr_Tuning_Spe_STD1_and_MIS2.mat', 'Corr_Score')
 clear
 
 %% old

@@ -45,6 +45,7 @@ for t=1:length(Behavior{s}.texture_position)
 end
 end
 
+Spatial_correlation.Texture.Bins=bin_tex;
 %% Find swapped texture
 rotated_tex=abs(bin_tex{sessions(1)} - bin_tex{sessions(2)})>10; %rotated texture= change >10 bins
 bins_move=bin_tex{sessions(2)}(rotated_tex);%Bins to switch on the first session
@@ -71,6 +72,10 @@ end
 bins_swap=reshape(bins_move_all,[],1);
 bins_new=reshape(bins_go_all,[],1);
 bins_retained=setdiff((1:Nbin),bins_swap);
+
+Spatial_correlation.Texture.Moved=bins_swap;
+Spatial_correlation.Texture.Retained=bins_retained;
+
 
 %% PV and TC correlation between swapped and unchanged texture
 for i=1:size(sessions,2)
@@ -107,7 +112,6 @@ Spatial_correlation.PV_correlation.TunedROI.retained_bins.PVcorr=PVcorr_tuned_re
 Spatial_correlation.PV_correlation.TunedROI.swapped_bins.PVcorr=PVcorr_tuned_swap;
 Spatial_correlation.PV_correlation.TunedROI.retained_bins.PVcorr_dF=PVcorr_df_tuned_retained;
 Spatial_correlation.PV_correlation.TunedROI.swapped_bins.PVcorr_dF=PVcorr_df_tuned_swap;
-
 
 %TC corr
 for ROI=1:size(rate_map{sessions(1)},2)  
