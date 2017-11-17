@@ -1,10 +1,14 @@
 function [Spatial_correlation] = tuned_ROI(Spatial_correlation,Place_cell)
 
 %% Import data
-pie_chart=Spatial_correlation.options.pie_sessions;
+venn_ses=Spatial_correlation.options.venn; 
+pie_chart=Spatial_correlation.options.sessions;
 sessions=Spatial_correlation.options.tuned_session;
 criteria1=Spatial_correlation.options.tuned_criteria1;
 criteria2=Spatial_correlation.options.tuned_criteria2; 
+name_session=Spatial_correlation.options.name;
+
+
 % all_sessions=Spatial_correlation.options.sessions; % X:Y plot session X to Y
 %Bug with missing last ROI
 tuned_ses=Spatial_correlation.options.tuned_session;
@@ -80,26 +84,36 @@ Spatial_correlation.options.name_criteria1= name_criteria1;
 for i=1:size(idx_ROI_pie,1)
 ROI_pie{i}=find(idx_ROI_pie(i,:)==1);
 end
-nb_tunedROI=[sum(idx_ROI_pie(pie_chart(1),:)') sum(idx_ROI_pie(pie_chart(2),:)')];
-tuned_tot=unique([ROI_pie{pie_chart(1)} ROI_pie{pie_chart(2)}]);
-nb_tuned_tot=numel(tuned_tot);
+nb_tunedROI=sum(idx_ROI_pie');
 
-lost_ROI=setdiff(ROI_pie{pie_chart(1)}, ROI_pie{pie_chart(2)});
-lost_nb=numel(lost_ROI);
-new_ROI=setdiff(ROI_pie{pie_chart(2)}, ROI_pie{pie_chart(1)});
-new_nb=numel(new_ROI);
-retained_ROI=intersect(ROI_pie{pie_chart(2)}, ROI_pie{pie_chart(1)});
-retained_nb=numel(retained_ROI);
-lost_new=[lost_nb new_nb];
-for i=1:size(pie_chart,2)
-pie_session{i}=[retained_nb lost_new(i)];
+Spatial_correlation.nb_tuned_ROI=nb_tunedROI;
+Spatial_correlation.tuned_ROI_ID=ROI_pie;
+
+for i=1:size(venn_ses,2)
+AandB{i}=intersect(ROI_pie{venn_ses{i}(1)}, ROI_pie{venn_ses{i}(2)});
+A_only{i}=(setdiff(ROI_pie{venn_ses{i}(1)},ROI_pie{venn_ses{i}(2)}));
+B_only{i}=(setdiff(ROI_pie{venn_ses{i}(2)},ROI_pie{venn_ses{i}(1)}));
 end
-pie_labels{1}={'Retained', 'Lost'};
-pie_labels{2}={'Retained', 'New'};
 
-chart_all=[retained_nb new_nb lost_nb];
+figure; 
+for i=1:size(venn_ses,2)
+    subplot(1,size(venn_ses,2),i)
+v_venn{i}=[numel(A_only{i})   numel(B_only{i}) numel(AandB{i})];
+[H ,S]=venn([numel(A_only{i})   numel(B_only{i}) numel(AandB{i})],'faceColor',{'b','g'});
+lgd={['Tuned Session ' name_session(venn_ses{i}(1)), [num2str(numel(A_only{i})) '/' num2str(nb_tunedROI(venn_ses{i}(1)))]], ['Tuned Session ', name_session(venn_ses{i}(2)) [num2str(numel(B_only{i})) '/' num2str(nb_tunedROI(venn_ses{i}(2)))]], ['Tuned both ', [num2str(length(AandB{i}))]]};
+title('Place cell stability');
+for i = 1:3
+text(S.ZoneCentroid(i,1), S.ZoneCentroid(i,2), [lgd{i} ])
+end
+end
+Spatial_correlation.venn=v_venn;
 
-Spatial_correlation.pie_chart=chart_all;
+
+ 
+ 
+
+
+
 %Spatial_correlation.pie_labels=pie_labels;
 
 

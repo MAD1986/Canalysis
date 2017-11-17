@@ -1,8 +1,11 @@
 %% Correlation analysis
 addpath(genpath('/Users/martial/Documents/GitHub/Canalysis'));
 %% Define tuned ROI
+% Analyze sessions # 
+Spatial_correlation.options.sessions=[1:3]; 
+Spatial_correlation.options.name=[{'D2'}, {'D3'}, {'D4'} {'D5'}, {'D6 1'}, {'D6 2'}]; % name of sessions
 %  Define tuned for session:
-Spatial_correlation.options.tuned_session=[1,2]; % If multitple use [X,Y]
+Spatial_correlation.options.tuned_session=[1,3]; % If multitple use [X,Y]
             %   cristeria1:
 Spatial_correlation.options.tuned_criteria1='tuning';
 %'both' = tuning specificity + spatial information
@@ -14,21 +17,21 @@ Spatial_correlation.options.tuned_criteria2='and';
 %or = tuned ROI in one of the selected session 
 %and= tuned ROI in all of the selected sessions
 
-            % Pie chart 
-Spatial_correlation.options.pie_sessions=[1,2]; %Pie chart between 2 sessions ([X, Y])
-
-             %function
+% Venn diagramm: between 2 sessions ONLY
+Spatial_correlation.options.venn={[1:2]};
+           
+%function
 Spatial_correlation=tuned_ROI(Spatial_correlation, Place_cell);
-
 
 % GUI tuned ROI
 sessions=1:3; % X:Y plot session X to Y
-GUI_tuned=0; 
+GUI_tuned=1; 
 if GUI_tuned==1
+ figure;
 sessions_tuned_ROI_GUI(Place_cell,Imaging,Behavior,Spatial_correlation, sessions);
 end
 %% Plot rate map ordered
-Spatial_correlation.options.sessions=1:2; % X:Y plot session X to Y
+Spatial_correlation.options.sessions=1; % X:Y plot session X to Y
 Spatial_correlation.options.order=1; %order rate map for session # (1 to 3)
 Spatial_correlation.options.ratemapsm=1; %smooth rate map (cosmetic) (0 = no smooth)
 %Spatial_correlation.options.name=[{'STD'}, {'MIS'}, {'STD1'}, {'STD2'} ]; % name of sessions

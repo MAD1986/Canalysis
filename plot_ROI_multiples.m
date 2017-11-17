@@ -39,6 +39,15 @@ end
 % Plot only keep ROI:
 plot_keep=0; % 0 or 1
 corr_scor_min=0.85; %min correlation score for ROI between session 
+% Plot only tuned ROI:
+plot_tuned=0; % 0 or 1
+if plot_tuned==true;
+for i=1:length(Place_cell)
+tunedROI{i}=Place_cell{i}.Tuned_ROI;  
+keep=unique(cell2mat(tunedROI));
+end
+end
+
 %% plot contour
 FOV=length(ROI{1}.Cn_max);
 if plot_keep==true; % 0 or 1
@@ -52,6 +61,10 @@ elseif length(ROI)==1
 elseif plot_keep==false;
     keep_all=1:size(C_df{1},2);
 end
+if plot_tuned==true; % 0 or 1
+keep_all=keep;
+end
+
 
 figure
 for i=1:length(ROI)
